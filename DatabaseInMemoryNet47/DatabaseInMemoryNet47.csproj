@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net47</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ServiceStack.OrmLite" Version="4.5.14" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="4.5.14" />
+    <!-- <PackageReference Include="System.Data.SQLite.Core" Version="1.0.106" /> -->
+  </ItemGroup>
+
+</Project>
