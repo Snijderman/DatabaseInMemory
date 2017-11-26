@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Data.Sqlite;
+using System.ComponentModel;
 using System.Data;
 
 namespace SqliteDatabaseInMemoryNetStandard
@@ -27,13 +28,33 @@ namespace SqliteDatabaseInMemoryNetStandard
          InMemoryDbConnection = null;
       }
 
-      public virtual IDbConnection OpenDbConnection()
+      public virtual void OpenDbConnection()
+      {
+         if (InMemoryDbConnection == null || InMemoryDbConnection.State == ConnectionState.Closed)
+         {
+            CloseDbConnection();
+
+            //InMemoryDbConnection = new MemoryConnection("Data Source=:memory:;");
+            InMemoryDbConnection = new MemoryConnection("Data Source=[PayrollData]; Mode=Memory;");
+            InMemoryDbConnection.Open();
+
+            //var db = ((SqliteConnection)InMemoryDbConnection).Database;
+            //((SqliteConnection)InMemoryDbConnection).ChangeDatabase("PayrollData");
+            //db = ((SqliteConnection)InMemoryDbConnection).Database;
+
+            //using (var command = new SqliteCommand("attach database as PayrollData", (SqliteConnection)InMemoryDbConnection))
+            //{
+            //   command.ExecuteScalar();
+            //}
+            ////var tst = new SqliteCommand("attach database as PayrollData", (SqliteConnection)InMemoryDbConnection);
+
+         }
+      }
+
+      public IDbConnection GetDbConnection()
       {
          if (InMemoryDbConnection == null)
-         {
-            InMemoryDbConnection = new MemoryConnection("Data Source=:memory:");
-            InMemoryDbConnection.Open();
-         }
+            OpenDbConnection();
 
          return InMemoryDbConnection;
       }
@@ -56,7 +77,6 @@ namespace SqliteDatabaseInMemoryNetStandard
             cmd.CommandText = sql;
             cmd.CommandType = CommandType.Text;
             return Parse<T>(cmd.ExecuteScalar());
-            //return Convert<object, typeof(T)>(cmd.ExecuteScalar());
          }
       }
 
