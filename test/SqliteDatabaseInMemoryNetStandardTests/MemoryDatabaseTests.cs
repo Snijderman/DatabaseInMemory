@@ -17,6 +17,8 @@ namespace SqliteDatabaseInMemoryNetStandardTests
          CreateTables(db);
          TestCount(db, 0);
          CreateTablesFirst(db);
+         db.OpenDbConnection().Close();
+         TestCount(db, 0);
 
          //db.Close();
          //TestCount(db, 0);

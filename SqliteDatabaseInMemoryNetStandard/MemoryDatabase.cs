@@ -22,7 +22,7 @@ namespace SqliteDatabaseInMemoryNetStandard
          if (InMemoryDbConnection == null)
             return;
 
-         InMemoryDbConnection.Close();
+         ((MemoryConnection)InMemoryDbConnection).CloseConnection();
          InMemoryDbConnection.Dispose();
          InMemoryDbConnection = null;
       }

@@ -15,5 +15,15 @@ namespace SqliteDatabaseInMemoryNetStandard
 
          // do not dispose, keep connection (and the database in memory!!!!) alive
       }
+
+      public override void Close()
+      {
+         // do nothing, close only from method called by MemoryDatabase
+      }
+
+      internal void CloseConnection()
+      {
+         base.Close();
+      }
    }
 }
